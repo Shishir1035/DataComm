@@ -1,18 +1,21 @@
-from CRC import getCRC
+from CRC import getCRC,reshape
 
 dataword = '1001'
 divisor = '1011'
 FLAG = ["correct","wrong"]
 
 # CRC encoding
-crc = getCRC(dataword, divisor)
-encoded_dataword= dataword+ format(crc, '0' + str(len(divisor) - 1) + 'b')
+rem = getCRC(dataword, divisor)
+crc = reshape(rem, len(divisor)-1)
+encoded_dataword = dataword + crc
 print(f"CRC = {crc} , Encoded Codeword = {encoded_dataword}")
 
-# CRC checking
-received_dataword= '1001110'
-newcrc = getCRC(received_dataword, divisor)
-decoded_dataword= dataword+ format(newcrc, '0' + str(len(divisor) - 1) + 'b')
 
+received_dataword= '10101010100000'
+
+# CRC checking
+newrem = getCRC(received_dataword, divisor)
+newcrc = reshape(newrem, len(divisor)-1)
+decoded_dataword = dataword+ newcrc
 print(f"CRC = {newcrc} , Decoded Codeword = {decoded_dataword}")
-print(f"The received dataword is {FLAG[newcrc!=0]}")
+print(f"The received dataword is {FLAG[newrem!=0]}")

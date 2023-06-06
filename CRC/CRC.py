@@ -1,3 +1,8 @@
+def reshape(crc, sz):
+    crc = bin(crc)[2:]
+    crc = (sz-len(crc))*'0' + crc
+    return crc
+
 def getCRC(dataword, divisor):
     crc = 0
     divisor_length = len(divisor)
@@ -12,4 +17,5 @@ def getCRC(dataword, divisor):
             augdataWord = augdataWord[:i] + xor_result + augdataWord[i + divisor_length:]
 
         crc = int(augdataWord[-divisor_length + 1:], 2)
+    
     return crc
