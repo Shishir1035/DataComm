@@ -1,21 +1,20 @@
-def reshape(crc, sz):
-    crc = bin(crc)[2:]
-    crc = (sz-len(crc))*'0' + crc
-    return crc
-
 def getCRC(dataword, divisor):
     crc = 0
-    divisor_length = len(divisor)
+    divisorlen = len(divisor)
+    augdataWord = dataword+ '0' * (divisorlen - 1)
 
-    augdataWord = dataword+ '0' * (divisor_length - 1)
-    for i in range(len(augdataWord)-divisor_length+1):
+    for i in range(len(augdataWord)-divisorlen+1):
         if augdataWord[i] == '1':
             xor_result = ''
-            for j in range(divisor_length):
+            for j in range(divisorlen):
                 xor_bit = int(augdataWord[i + j]) ^ int(divisor[j])
-                xor_result += str(xor_bit)        
-            augdataWord = augdataWord[:i] + xor_result + augdataWord[i + divisor_length:]
+                xor_result += str(xor_bit)      
+                # print(f'i = {i}, j = {j}, xor_bit = {xor_bit}, xor_res = {xor_result}')  
+            
+            # 0 to i , i to i+divisor, i+divisor to last
+            augdataWord = augdataWord[:i] + xor_result + augdataWord[i + divisorlen:]
 
-        crc = int(augdataWord[-divisor_length + 1:], 2)
-    
-    return crc
+    rem = int(augdataWord[-divisorlen + 1:], 2)
+    crc = augdataWord[-divisorlen+1:]
+    return rem,crc
+
