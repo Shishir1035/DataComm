@@ -26,42 +26,48 @@
 
 
 
-dataword = '1001'
-divisor = '1011'
-new_dataword = dataword + '0'*(len(divisor)-1) 
-print(new_dataword)
+# dataword = '1001'
+# divisor = '1011'
+# new_dataword = dataword + '0'*(len(divisor)-1) 
+# print(new_dataword)
 
-def getcrc(dataword,divisor):
-    for i in range(len(dataword) - len(divisor) + 1):
-        if dataword[i] == '1':
-            exorseq = ''
-            for j in range(len(divisor)):
-                exor = int(dataword[i+j],2) ^ int(divisor[j],2)
-                exorseq = exorseq + str(exor)
-            dataword = dataword[:i] + exorseq + dataword[i+len(divisor):]
-    return dataword[-len(divisor)+1:]
-
-
-crc = getcrc(new_dataword,divisor)
-print(crc)
-Codeword = dataword+crc
-print(Codeword)
+# def getcrc(dataword,divisor):
+#     for i in range(len(dataword) - len(divisor) + 1):
+#         if dataword[i] == '1':
+#             exorseq = ''
+#             for j in range(len(divisor)):
+#                 exor = int(dataword[i+j],2) ^ int(divisor[j],2)
+#                 exorseq = exorseq + str(exor)
+#             dataword = dataword[:i] + exorseq + dataword[i+len(divisor):]
+#     return dataword[-len(divisor)+1:]
 
 
-print(getcrc(Codeword,divisor))
+# crc = getcrc(new_dataword,divisor)
+# print(crc)
+# Codeword = dataword+crc
+# print(Codeword)
 
 
+# # print(getcrc(Codeword,divisor))
 
 
+str = "x^6+x^3+x^1"
+
+# print(str.split('+'))
+
+lol = str.split('+')
+
+paw = []
+for i in lol:
+    paw.append(i.strip('x^')) 
 
 
+num = 0
+print(paw)
+for i in paw:
+    num = num + (1<<(int(i)))
+    print(i,num)
 
-
-
-
-
-
-
-
+print(bin(num)[2:])
 
 
